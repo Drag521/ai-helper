@@ -5,8 +5,19 @@ export const runtime = 'nodejs'
 import { exec } from 'child_process'
 import { promisify } from 'util'
 import { NextRequest, NextResponse } from 'next/server'
+import { homedir } from 'os'
+import { existsSync } from 'fs'
 
 const execAsync = promisify(exec)
+
+// Resolve ~ to actual home dir — child_process can't expand shell aliases
+function resolveCwd(cwd?: string): string {
+  const home = homedir()
+  if (!cwd || cwd === '~') return home
+  if (cwd.startsWith('~/')) return home + cwd.slice(1)
+  if (existsSync(cwd)) return cwd
+  return home
+}
 
 export async function POST(req: NextRequest) {
   let body: { command: string; timeout_seconds?: number; cwd?: string }
@@ -21,18 +32,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'No command' }, { status: 400 })
   }
 
+  const home = homedir()
+  const resolvedCwd = resolveCwd(cwd)
   const start = Date.now()
+
   try {
     const { stdout, stderr } = await execAsync(command, {
       timeout: timeout_seconds * 1000,
       shell: '/bin/bash',
-      cwd: cwd ?? process.env.HOME ?? '/root',
+      cwd: resolvedCwd,
       env: {
         ...process.env,
-        HOME: process.env.HOME ?? '/root',
+        HOME: home,
         TERM: 'xterm-256color',
+        NVM_DIR: process.env.NVM_DIR ?? `${home}/.config/nvm`,
       },
-      maxBuffer: 1024 * 1024 * 5, // 5MB output buffer
+      maxBuffer: 1024 * 1024 * 5,
     })
     return NextResponse.json({
       status: 'success',

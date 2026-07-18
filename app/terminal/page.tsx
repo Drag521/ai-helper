@@ -25,7 +25,7 @@ export default function TerminalPage() {
   const [running, setRunning] = useState(false)
   const [history, setHistory] = useState<string[]>([])
   const [histIdx, setHistIdx] = useState(-1)
-  const [cwd, setCwd] = useState('~')
+  const [cwd, setCwd] = useState('')  // empty = server resolves to homedir()
   const inputRef = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   let lineId = useRef(100)
@@ -53,8 +53,9 @@ export default function TerminalPage() {
     setHistory(prev => [trimmed, ...prev.slice(0, 99)])
     setHistIdx(-1)
 
-    // Show the input line
-    addLine('input', `${cwd} $ ${trimmed}`)
+    // Show the input line — display ~ instead of raw home path
+    const displayCwd = (cwd || '~').replace(/^\/home\/[^/]+/, '~')
+    addLine('input', `${displayCwd} $ ${trimmed}`)
     setInput('')
     setRunning(true)
 
@@ -72,11 +73,30 @@ export default function TerminalPage() {
       setRunning(false)
       return
     }
-    if (trimmed.startsWith('cd ')) {
-      const path = trimmed.slice(3).trim()
-      setCwd(path || '~')
-      addLine('output', `[cwd set to ${path || '~'}]`)
-      setRunning(false)
+    // Handle cd — run it as a real command and capture the new pwd
+    if (trimmed.startsWith('cd') ) {
+      const target = trimmed.slice(2).trim() || ''
+      const cdCmd = target ? `cd ${target} && pwd` : 'cd && pwd'
+      try {
+        const res = await fetch('/api/terminal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ command: cdCmd, timeout_seconds: 10, cwd: cwd || undefined }),
+        })
+        const data = await res.json()
+        if (data.status === 'success' && data.stdout.trim()) {
+          const newCwd = data.stdout.trim()
+          setCwd(newCwd)
+          addLine('info', `[cd → ${newCwd}]`)
+        } else {
+          addLine('error', data.stderr || '[cd failed]')
+        }
+      } catch (err) {
+        addLine('error', `[Network error: ${String(err)}]`)
+      } finally {
+        setRunning(false)
+        setTimeout(() => inputRef.current?.focus(), 50)
+      }
       return
     }
 
@@ -84,28 +104,26 @@ export default function TerminalPage() {
       const res = await fetch('/api/terminal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: trimmed, timeout_seconds: 30, cwd }),
+        body: JSON.stringify({ command: trimmed, timeout_seconds: 30, cwd: cwd || undefined }),
       })
       const data = await res.json()
 
       if (data.stdout) {
-        data.stdout.split('\n').forEach((line: string) => {
-          addLine('output', line)
-        })
+        // trim trailing newline then split
+        const outLines = data.stdout.replace(/\n$/, '').split('\n')
+        outLines.forEach((line: string) => addLine('output', line))
       }
       if (data.stderr) {
-        data.stderr.split('\n').filter(Boolean).forEach((line: string) => {
+        data.stderr.replace(/\n$/, '').split('\n').filter(Boolean).forEach((line: string) => {
           addLine('error', line)
         })
       }
       if (data.status === 'error' && !data.stdout && !data.stderr) {
         addLine('error', `[Exit ${data.exit_code}]`)
       }
-      if (data.duration_ms != null) {
-        addLine('info', `[${data.duration_ms}ms]`)
-      }
+      addLine('info', `[${data.duration_ms}ms | exit ${data.exit_code ?? 0}]`)
     } catch (err) {
-      addLine('error', `[Network error: ${String(err)}]`)
+      addLine('error', `[Network error — is pnpm start running? ${String(err)}]`)
     } finally {
       setRunning(false)
       setTimeout(() => inputRef.current?.focus(), 50)
@@ -198,7 +216,7 @@ export default function TerminalPage() {
         {/* Live input line */}
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 4 }}>
           <span style={{ color: 'var(--green)', marginRight: 6, whiteSpace: 'nowrap' }}>
-            {cwd} $
+            {cwd ? cwd.replace(/^\/home\/[^/]+/, '~') : '~'} $
           </span>
           <input
             ref={inputRef}
