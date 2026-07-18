@@ -89,7 +89,7 @@ systemctl --user status ai-helper.service
 adb devices
 
 # If no device shows:
-adb connect localhost:5555
+adb connect 100.115.90.2:5555
 # or connect via the ADB command Shizuku shows you
 
 # Once a device appears, Shizuku project will work
@@ -166,7 +166,7 @@ pnpm build && pnpm start
 | `adb: command not found` | Run `sudo apt-get install -y adb` |
 | Port 13000 already in use | Kill it: `kill $(lsof -t -i:13000)` then restart |
 | App won't load after reboot | Run `cd ~/ai-helper-app && pnpm start` or enable systemd service |
-| ADB devices shows empty | Enable USB debugging on Android, or run `adb connect localhost:5555` |
+| ADB devices shows empty | Enable USB debugging on Android, or run `adb connect 100.115.90.2:5555` |
 | Shizuku project fails | Open Shizuku app → make sure service is started |
 
 ---

@@ -228,7 +228,7 @@ export default function ConfigPage() {
           <div><span style={{ color: 'var(--green)' }}>systemctl --user enable ai-helper.service</span></div>
           <div><span style={{ color: 'var(--green)' }}>systemctl --user start ai-helper.service</span></div>
           <div style={{ marginTop: 8 }}>ADB/Shizuku: ensure ADB is enabled, then:</div>
-          <div><span style={{ color: 'var(--green)' }}>adb connect localhost:5555</span> or connect via USB</div>
+          <div><span style={{ color: 'var(--green)' }}>adb connect 100.115.90.2:5555</span> — Crostini ADB address</div>
         </div>
       </Section>
     </div>
