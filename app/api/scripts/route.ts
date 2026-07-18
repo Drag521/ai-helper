@@ -1,3 +1,4 @@
+export const runtime = 'nodejs'
 // Lists and reads shell scripts from ~/ai-helper/scripts/
 import { NextRequest, NextResponse } from 'next/server'
 import { readdir, readFile, stat } from 'fs/promises'

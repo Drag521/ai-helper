@@ -1,3 +1,4 @@
+export const runtime = 'nodejs'
 // Persists run records to ~/ai-helper/logs/runs.json
 import { NextRequest, NextResponse } from 'next/server'
 import { readFile, writeFile, mkdir } from 'fs/promises'

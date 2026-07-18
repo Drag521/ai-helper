@@ -1,3 +1,4 @@
+export const runtime = 'nodejs'
 // Diagnostics + self-repair endpoint
 // Checks ~/ai-helper/ structure and reports what's missing
 import { NextResponse } from 'next/server'
