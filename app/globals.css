@@ -3,86 +3,67 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+/* ═══════════════════════════════════════════════════════
+   AI HELPER — Neo-Retro Terminal Theme
+   Phosphor green on deep black. CRT. Mono. Real.
+   ═══════════════════════════════════════════════════════ */
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+:root {
+  /* Terminal palette */
+  --bg:            #0A0A0A;
+  --surface:       #111111;
+  --surface2:      #181818;
+  --border:        rgba(51, 255, 51, 0.18);
+  --border-bright: rgba(51, 255, 51, 0.55);
+
+  --green:         #33FF33;
+  --green-dim:     #1A8C1A;
+  --green-glow:    rgba(51, 255, 51, 0.12);
+  --amber:         #FFB000;
+  --amber-dim:     #996800;
+  --cyan:          #00BFFF;
+  --red:           #FF4444;
+  --white:         #E8FFE8;
+  --muted:         #4a7a4a;
+
+  /* shadcn compat tokens mapped to terminal */
+  --background:        var(--bg);
+  --foreground:        var(--green);
+  --card:              var(--surface);
+  --card-foreground:   var(--green);
+  --popover:           var(--surface);
+  --popover-foreground: var(--green);
+  --primary:           var(--green);
+  --primary-foreground: #000;
+  --secondary:         var(--surface2);
+  --secondary-foreground: var(--green-dim);
+  --muted:             var(--surface2);
+  --muted-foreground:  var(--green-dim);
+  --accent:            var(--surface2);
+  --accent-foreground: var(--green);
+  --destructive:       var(--red);
+  --destructive-foreground: #fff;
+  --input:             var(--surface2);
+  --ring:              var(--green);
+  --radius:            0px;
+
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--green);
+  --sidebar-primary: var(--green);
+  --sidebar-primary-foreground: #000;
+  --sidebar-accent: var(--surface2);
+  --sidebar-accent-foreground: var(--green);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--green);
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-sans: 'JetBrains Mono', 'Courier New', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -92,38 +73,206 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
 }
 
+/* ─── Base ───────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  html, body {
+    background-color: var(--bg);
+    color: var(--green);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  /* CRT scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 2px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* Screen vignette */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+    z-index: 9997;
+  }
+
+  ::selection {
+    background: var(--green);
+    color: #000;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--green-dim); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--green); }
 }
 
-nextjs-portal {
-  display: none !important;
+/* ─── Terminal glow text ─────────────────────────────── */
+.glow {
+  text-shadow: 0 0 8px rgba(51, 255, 51, 0.7), 0 0 2px rgba(51, 255, 51, 0.4);
 }
+.glow-amber {
+  text-shadow: 0 0 8px rgba(255, 176, 0, 0.7), 0 0 2px rgba(255, 176, 0, 0.4);
+}
+.glow-cyan {
+  text-shadow: 0 0 8px rgba(0, 191, 255, 0.7), 0 0 2px rgba(0, 191, 255, 0.4);
+}
+.glow-red {
+  text-shadow: 0 0 8px rgba(255, 68, 68, 0.7), 0 0 2px rgba(255, 68, 68, 0.4);
+}
+
+/* ─── ASCII terminal card ────────────────────────────── */
+.term-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.term-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: 0 0 20px var(--green-glow), inset 0 0 20px rgba(51,255,51,0.03);
+}
+
+/* ─── Status badges ──────────────────────────────────── */
+.badge-ok      { color: var(--green);  background: rgba(51,255,51,0.1);  border: 1px solid rgba(51,255,51,0.3); }
+.badge-fail    { color: var(--red);    background: rgba(255,68,68,0.1);  border: 1px solid rgba(255,68,68,0.3); }
+.badge-running { color: var(--amber);  background: rgba(255,176,0,0.1);  border: 1px solid rgba(255,176,0,0.3); }
+.badge-skip    { color: var(--muted);  background: rgba(74,122,74,0.1);  border: 1px solid rgba(74,122,74,0.3); }
+.badge-pending { color: var(--muted);  background: transparent;          border: 1px solid rgba(74,122,74,0.25); }
+
+/* ─── Button styles ──────────────────────────────────── */
+.btn-primary {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.12s ease;
+  text-transform: uppercase;
+}
+.btn-primary:hover {
+  background: rgba(51,255,51,0.12);
+  box-shadow: 0 0 12px var(--green-glow);
+}
+.btn-primary:active {
+  background: rgba(51,255,51,0.22);
+}
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.12s ease;
+  text-transform: uppercase;
+}
+.btn-danger:hover {
+  background: rgba(255,68,68,0.1);
+  box-shadow: 0 0 12px rgba(255,68,68,0.2);
+}
+
+/* ─── Blinking cursor ────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+  color: var(--green);
+  margin-left: 2px;
+}
+
+/* ─── Typewriter + step reveal ───────────────────────── */
+@keyframes scanIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-line {
+  animation: scanIn 0.1s ease forwards;
+}
+
+/* ─── Progress bar ───────────────────────────────────── */
+.progress-bar {
+  height: 4px;
+  background: var(--surface2);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  box-shadow: 0 0 6px rgba(51,255,51,0.6);
+  transition: width 0.3s ease;
+}
+
+/* ─── JSON viewer ────────────────────────────────────── */
+.json-key   { color: var(--cyan); }
+.json-str   { color: var(--amber); }
+.json-num   { color: #FF8C69; }
+.json-bool  { color: var(--green); }
+.json-null  { color: var(--muted); }
+
+/* ─── Amber/red overrides for category labels ─────────── */
+.cat-system      { color: var(--green);  }
+.cat-maintenance { color: var(--amber);  }
+.cat-watchdog    { color: var(--cyan);   }
+.cat-android     { color: #FF6B6B;       }
+
+/* ─── Input / select terminal style ─────────────────── */
+.term-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--green);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.term-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 6px var(--green-glow);
+}
+
+nextjs-portal { display: none !important; }
