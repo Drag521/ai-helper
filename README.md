@@ -2,6 +2,10 @@
 
 A general-purpose Next.js web application template with database initialization and AI-friendly foundations.
 
+[![CI](https://github.com/Drag521/ai-helper/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/ci.yml)
+[![Deploy](https://github.com/Drag521/ai-helper/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/deploy.yml)
+[![Security](https://github.com/Drag521/ai-helper/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/security.yml)
+
 ## Features
 
 - **Standardized Utilities**: Prediction-first wrappers for `fetch`, `env` validation, and a leveled `logger`.
