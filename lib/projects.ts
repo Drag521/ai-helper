@@ -132,7 +132,7 @@ const shizukuAdbPlan: ToolPlan = {
     { step_id: 's5', type: 'tool', tool_name: 'shizuku_binder', command: "adb shell service list 2>/dev/null | grep -i shizuku | head -5 || echo 'SHIZUKU_NOT_LISTED'", params: {}, expected_result: 'Binder service or NOT_LISTED', timeout_seconds: 15 },
     { step_id: 's6', type: 'tool', tool_name: 'shizuku_automation_stub', command: 'bash ~/ai-helper/scripts/shizuku_runner.sh run_automation', params: { mode: 'stub', task: 'health_check' }, expected_result: 'Automation stub executed', timeout_seconds: 30 },
   ],
-  stop_conditions: ['pc1 ADB_MISSING — sudo apt-get install -y adb', 'pc2 no devices — enable ADB: adb connect 100.115.90.2:5555', 'Shizuku not running — open app and start service'],
+  stop_conditions: ['pc1 ADB_MISSING — sudo apt-get install -y adb', 'pc2 no devices — enable ADB or adb connect <ip>', 'Shizuku not running — open app and start service'],
   failure_policy: { max_retries_per_step: 1, on_failure: 'stop_and_report', report_contains: ['step_id', 'error_summary', 'suggested_next_action'] },
   idempotency_notes: ['All adb commands read-only', 'Shizuku stub safe to run repeatedly'],
 }

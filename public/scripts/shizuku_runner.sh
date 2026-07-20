@@ -33,7 +33,7 @@ adb_check() {
   fi
   DEVICES=$(adb devices 2>/dev/null | tail -n +2 | grep -v '^$' | grep -v 'offline')
   if [ -z "${DEVICES}" ]; then
-    log WARN "No ADB devices found — connect device or run: adb connect 100.115.90.2:5555"
+    log WARN "No ADB devices found — connect device or run: adb connect localhost:5555"
     echo "NO_DEVICES"
     return 1
   fi

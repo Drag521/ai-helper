@@ -4,10 +4,9 @@ import { usePathname } from 'next/navigation'
 import { useStore } from '@/lib/store'
 
 const NAV = [
-  { href: '/',          label: 'PROJECTS',  key: '1', icon: '[>]' },
-  { href: '/terminal',  label: 'TERMINAL',  key: '2', icon: '[$]' },
-  { href: '/logs',      label: 'LOGS',      key: '3', icon: '[#]' },
-  { href: '/config',    label: 'CONFIG',    key: '4', icon: '[*]' },
+  { href: '/',       label: 'PROJECTS',  key: '1', icon: '[>]' },
+  { href: '/logs',   label: 'LOGS',      key: '2', icon: '[#]' },
+  { href: '/config', label: 'CONFIG',    key: '3', icon: '[*]' },
 ]
 
 export default function NavSidebar() {

@@ -1,17 +1,22 @@
 [Unit]
 Description=AI Helper — Personal On-Device Automation Tool
+Documentation=https://localhost:13000
 After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=%h/ai-helper-app
-ExecStart=/bin/bash -c 'export NVM_DIR="${HOME}/.config/nvm"; [ -s "${NVM_DIR}/nvm.sh" ] || NVM_DIR="${HOME}/.nvm"; source "${NVM_DIR}/nvm.sh"; cd %h/ai-helper-app && pnpm start'
+WorkingDirectory=%h/workspace/project
+ExecStart=/usr/bin/env pnpm start
 Restart=on-failure
 RestartSec=5s
 StandardOutput=journal
 StandardError=journal
+# Environment
 Environment=NODE_ENV=production
 Environment=AI_HELPER_LIVE=1
+# Resource limits (reasonable for a personal tool)
+CPUQuota=40%
+MemoryLimit=512M
 
 [Install]
 WantedBy=default.target

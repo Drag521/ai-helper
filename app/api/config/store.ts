@@ -1,4 +1,3 @@
-export const runtime = 'nodejs'
 // Config persistence — reads/writes ~/ai-helper/config.json
 import { readFile, writeFile, mkdir } from 'fs/promises'
 import { homedir } from 'os'

@@ -1,4 +1,3 @@
-export const runtime = 'nodejs'
 // AI Helper — Real shell step executor
 // Runs actual bash commands on the local Linux system via child_process
 // Safety: command allowlist enforced, destructive commands blocked in Mode B
