@@ -16,16 +16,18 @@ jobs:
         with:
           version: 9
 
-      - name: Setup Node.js 22
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
-      - name: Agent Daily Evolution
+      - name: Self Evolution
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: node scripts/daily-evolution.js
+        run: node -e '
+          const { evolveSelf } = require("./lib/agent/core.js");
+          evolveSelf("Current state analysis");
+        '
