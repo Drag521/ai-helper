@@ -22,7 +22,8 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Agent Daily Evolution
         env:
