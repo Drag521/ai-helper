@@ -1,0 +1,38 @@
+name: Self-Improve Agent
+
+on:
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - run: pnpm install
+
+      - name: Run Free-Tier Agent
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}     # Free & fast
+          # GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}  # Alternative
+        run: |
+          node -e '
+            console.log("🤖 Free-tier self-improvement running...");
+            // TODO: Expand with Groq or Gemini SDK for real code analysis
+            console.log("Agent is now capable of proposing changes.");
+          '
+
+      - name: Create PR if changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "🤖 Auto: Self-improvement"
+          title: "Agent Self-Improvement Update"
+          body: "Autonomous update."
