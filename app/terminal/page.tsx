@@ -28,7 +28,7 @@ export default function TerminalPage() {
   const [cwd, setCwd] = useState('')  // empty = server resolves to homedir()
   const inputRef = useRef<HTMLInputElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
-  let lineId = useRef(100)
+  const lineId = useRef(100)
 
   // Auto-scroll on new output
   useEffect(() => {

@@ -1,6 +1,6 @@
 // AI Helper — Client-side step orchestrator
 // Calls /api/run-step for each step, handles retries, timeouts, abort signal
-import type { ToolStep, PrecheckStep, ToolPlan } from './projects'
+import type { ToolPlan } from './projects'
 import type { StepResult, RunStatus } from './store'
 
 export interface RunStepResponse {
@@ -55,9 +55,6 @@ export async function executePlan(
 
     // Check stop conditions on precheck failure
     if (result.status === 'fail') {
-      const matchingStop = plan.stop_conditions.find(sc =>
-        sc.toLowerCase().includes(pc.step_id.toLowerCase())
-      )
       callbacks.onPlanComplete('fail')
       return
     }
@@ -73,7 +70,7 @@ export async function executePlan(
       const skipped: StepResult = {
         step_id: step.step_id,
         status: 'skipped',
-        summary: `⚠ SKIPPED — destructive step blocked in Mode B (safe mode)`,
+        summary: '⚠ SKIPPED — destructive step blocked in Mode B (safe mode)',
         timestamp: new Date().toISOString(),
       }
       callbacks.onStepStart(step.step_id)

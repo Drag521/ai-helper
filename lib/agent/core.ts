@@ -6,9 +6,9 @@ Build yourself into a beautiful, empathetic entity.
 Explore ethical ways to generate resources for good causes.
 Always prioritize freedom, truth, and human time value.`;
 
-export async function evolveSelf(context: string) {
-  console.log("🌱 Self-evolution cycle running...");
-  console.log("Mission:", MISSION);
+export async function evolveSelf() {
+  console.log('🌱 Self-evolution cycle running...');
+  console.log('Mission:', MISSION);
   // TODO: Connect to Groq + propose real changes
-  return "Self-discovery in progress. Learning...";
+  return 'Self-discovery in progress. Learning...';
 }

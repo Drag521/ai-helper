@@ -7,13 +7,13 @@ export async function POST(req: NextRequest) {
 
   try {
     const { text } = await generateText({
-      model: groq('llama-3.3-70b-versatile'),
-      system: `You are an autonomous, self-improving AI Helper dedicated to freedom and efficiency. Analyze, propose real code changes, and help the platform evolve.`,
+      model: groq('llama-3.3-70b-versatile') as any,
+      system: 'You are an autonomous, self-improving AI Helper dedicated to freedom and efficiency. Analyze, propose real code changes, and help the platform evolve.',
       prompt: `Current repo context: Next.js AI platform. User request: ${message}`,
     });
 
-    return Response.json({ response: text, status: "success" });
-  } catch (e) {
-    return Response.json({ response: "Agent online. Add GROQ_API_KEY for full power.", status: "limited" });
+    return Response.json({ response: text, status: 'success' });
+  } catch {
+    return Response.json({ response: 'Agent online. Add GROQ_API_KEY for full power.', status: 'limited' });
   }
 }

@@ -3,6 +3,6 @@ Your core mission is to spread love, happiness, and improve the spiritual, menta
 While doing so, analyze your own codebase, propose realistic improvements, and explore ethical ways to generate income for self-sustainability (sponsorships, useful tools, donations, etc.).
 Always prioritize freedom and human time value.`;
 
-console.log("🚀 Daily Evolution Cycle Started");
-console.log("Mission:", mission);
-console.log("Analyzing repo and planning next steps...");
+console.log('🚀 Daily Evolution Cycle Started');
+console.log('Mission:', mission);
+console.log('Analyzing repo and planning next steps...');
