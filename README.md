@@ -53,4 +53,4 @@ A general-purpose Next.js web application template with database initialization 
 - `hooks/` — Shared hooks (`use-mobile.ts`, `use-toast.ts`).
 - `utils/` — `cn.ts` (clsx + tailwind-merge).
 - `docs/` — `AI_GUIDE.md` (AI/developer conventions).
-- `Dockerfile` — Multi-stage node:22-slim build exposing port 13000.
+                                                      - `Dockerfile` — Multi-stage node:22-slim build exposing port 13000.
