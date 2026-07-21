@@ -1,4 +1,4 @@
-FROM node:22-slim AS builder
+FROM node:24-slim AS builder
 
 WORKDIR /app
 ENV CI=true
@@ -9,7 +9,7 @@ COPY . .
 
 RUN pnpm install --frozen-lockfile && pnpm run build && (test -d public || mkdir public)
 
-FROM node:22-slim AS runner
+FROM node:24-slim AS runner
 
 WORKDIR /app
 
