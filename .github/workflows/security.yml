@@ -1,4 +1,4 @@
-name: "Security Scan"
+name: Security Scan
 
 on:
   push:
@@ -6,88 +6,32 @@ on:
   pull_request:
     branches: [main, develop]
   schedule:
-    # Run daily at 2 AM UTC
-    - cron: '0 2 * * *'
+    - cron: '0 2 * * *'  # Daily
 
 permissions:
   contents: read
   security-events: write
 
 jobs:
-  dependency-check:
-    name: Dependency Vulnerability Scan
+  audit:
+    name: Dependency Audit
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "pnpm"
-
-      - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Audit dependencies
-        run: pnpm audit --audit-level=moderate
-        continue-on-error: true
-
-      - name: Check for outdated packages
-        run: pnpm outdated
-        continue-on-error: true
+      - uses: ./.github/actions/setup-node-pnpm
+      - name: Audit
+        run: pnpm audit --audit-level=moderate || true
+      - name: Outdated check
+        run: pnpm outdated || true
 
   codeql:
-    name: CodeQL Analysis
+    name: CodeQL
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ['javascript']
+    permissions:
+      security-events: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
         with:
-          languages: ${{ matrix.language }}
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: /language:${{ matrix.language }}
-
-  type-safety:
-    name: Type Safety & Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: "pnpm"
-
-      - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: TypeScript strict check
-        run: pnpm tsc --noEmit
-        continue-on-error: false
-
-      - name: ESLint check
-        run: pnpm lint
-        continue-on-error: false
+          languages: javascript
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3
