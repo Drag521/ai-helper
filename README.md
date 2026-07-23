@@ -1,56 +1,37 @@
-# vibe-web-template
+# ai-helper
 
-A general-purpose Next.js web application template with database initialization and AI-friendly foundations.
+**Personal AI-powered automation tool & self-improving Next.js template.**
 
-[![CI](https://github.com/Drag521/ai-helper/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/ci.yml)
-[![Deploy](https://github.com/Drag521/ai-helper/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/deploy.yml)
-[![Security](https://github.com/Drag521/ai-helper/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/Drag521/ai-helper/actions/workflows/security.yml)
+A full-stack foundation with strong AI agent capabilities, database, modern UI, and autonomous self-evolution.
 
 ## Features
-
-- **Standardized Utilities**: Prediction-first wrappers for `fetch`, `env` validation, and a leveled `logger`.
-- **Database Ready**: Drizzle ORM + PostgreSQL initialization pre-configured.
-- **UI System**: Tailwind CSS 4, the full Radix UI primitive set (shadcn-style components under `components/ui/`), and `sonner` for notifications.
-- **Forms**: React Hook Form + Zod resolvers.
-- **AI-Friendly**: Ships with `docs/AI_GUIDE.md` to keep AI-generated code consistent.
+- **AI Core**: Groq + OpenAI + E2B code interpreter + Firecrawl + custom agent framework
+- **Self-Improving Agent**: Autonomous code evolution via scheduled workflows
+- **Database**: Drizzle ORM + PostgreSQL (ready for production)
+- **UI**: Next.js 16 + React 19 + Tailwind 4 + full shadcn/ui + Sonner
+- **Testing**: Playwright + TypeScript strict checks
+- **DevOps**: Docker, docker-compose, systemd, GitHub Actions
 
 ## Tech Stack
+- Next.js 16 (App Router) • React 19 • TypeScript 5
+- Tailwind CSS 4 • Radix UI + shadcn
+- Drizzle ORM + postgres • Zod + React Hook Form
+- AI: `ai` SDK, `@ai-sdk/groq`, `agentation`
 
-- Next.js 16 (App Router)
-- React 19 / TypeScript 5
-- Tailwind CSS 4
-- Drizzle ORM + PostgreSQL (`postgres` driver)
-- Zod + React Hook Form
-- Zustand (state management)
-- Vercel Analytics + optional Umami script injection
+## Quick Start
+1. `pnpm install`
+2. Copy `.env.example` → `.env` and set `DATABASE_URL`
+3. `pnpm dev` (runs on port 13000)
+4. Database: `pnpm db:generate && pnpm db:migrate`
 
-## Getting Started
+## Project Structure (key folders)
+- `app/` – Next.js routes + API agents
+- `lib/` – Utilities, logger, AI helpers
+- `docs/` – AI_GUIDE.md + architecture
+- `.github/workflows/` – CI, Security, Self-Improvement
 
-1. **Install dependencies**:
-   ```bash
-   pnpm install
-   ```
+## Self-Improvement
+Daily evolution jobs use Groq to analyze and propose improvements (see `daily-evolution.yml`).
 
-2. **Environment variables**:
-   Copy `.env.example` to `.env` and configure at minimum `DATABASE_URL`. Umami analytics variables (`NEXT_PUBLIC_UMAMI_SCRIPT_URL`, `NEXT_PUBLIC_UMAMI_WEBSITE_ID`) are optional and only injected in production.
-
-3. **Run development server** (port 13000):
-   ```bash
-   pnpm dev
-   ```
-
-4. **Database commands**:
-   - `pnpm db:generate` — generate migrations
-   - `pnpm db:migrate` — run migrations
-   - `pnpm db:studio` — open Drizzle Studio
-
-## Project Structure
-
-- `app/` — Next.js App Router (`layout.tsx`, `page.tsx`, `api/`).
-- `components/` — `AgentationGuard.tsx` plus shadcn-style primitives in `components/ui/`.
-- `db/` — Drizzle client (`db/index.ts`).
-- `lib/` — Core utilities: `request.ts`, `env.ts`, `logger.ts`, `errors.ts`, `utils.ts`, `agentationFeedbackMode.ts`.
-- `hooks/` — Shared hooks (`use-mobile.ts`, `use-toast.ts`).
-- `utils/` — `cn.ts` (clsx + tailwind-merge).
-- `docs/` — `AI_GUIDE.md` (AI/developer conventions).
-                                                      - `Dockerfile` — Multi-stage node:22-slim build exposing port 13000.
+## License
+MIT

@@ -1,26 +1,16 @@
 name: Deploy
-
 on:
-  push:
-    branches: [main]
+  push: { branches: [main] }
   workflow_dispatch:
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
   deploy:
-    name: Deploy to Production
     runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: ./.github/actions/setup-node-pnpm
-
-      - name: Build
-        run: pnpm build
-        env:
-          NODE_ENV: production
-
-      - name: Deployment Step
-        run: echo "TODO: Add your deploy command (rsync, Vercel, Docker, etc.)"
+      - run: pnpm build
+        env: { NODE_ENV: production }
+      - run: echo "TODO: Add deployment logic (Docker push, rsync, Vercel, etc.)"

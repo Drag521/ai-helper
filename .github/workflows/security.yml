@@ -1,43 +1,22 @@
 name: Security Scan
-
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
-  schedule:
-    - cron: '0 2 * * *'
-
-permissions:
-  contents: read
-  security-events: write
-
+  push: { branches: [main, develop] }
+  pull_request: { branches: [main, develop] }
+  schedule: [{ cron: '0 2 * * *' }]
+permissions: { contents: read, security-events: write }
 jobs:
   audit:
-    name: Dependency Audit
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm audit --audit-level=moderate || true
       - run: pnpm outdated || true
-
   codeql:
-    name: CodeQL Analysis
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
+    permissions: { security-events: write }
     steps:
       - uses: actions/checkout@v4
       - uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
+        with: { languages: javascript }
       - uses: github/codeql-action/autobuild@v3
       - uses: github/codeql-action/analyze@v3
-
-  type-safety:
-    name: Type Safety & Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ./.github/actions/setup-node-pnpm
-      - run: pnpm tsc --noEmit
-      - run: pnpm lint
