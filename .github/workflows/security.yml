@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main, develop]
   schedule:
-    - cron: '0 2 * * *'  # Daily
+    - cron: '0 2 * * *'
 
 permissions:
   contents: read
@@ -18,13 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: ./.github/actions/setup-node-pnpm
-      - name: Audit
-        run: pnpm audit --audit-level=moderate || true
-      - name: Outdated check
-        run: pnpm outdated || true
+      - run: pnpm audit --audit-level=moderate || true
+      - run: pnpm outdated || true
 
   codeql:
-    name: CodeQL
+    name: CodeQL Analysis
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -35,3 +33,11 @@ jobs:
           languages: javascript
       - uses: github/codeql-action/autobuild@v3
       - uses: github/codeql-action/analyze@v3
+
+  type-safety:
+    name: Type Safety & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup-node-pnpm
+      - run: pnpm tsc --noEmit
+      - run: pnpm lint

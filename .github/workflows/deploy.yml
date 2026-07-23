@@ -22,7 +22,5 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Deploy
-        run: |
-          echo "Add your deployment logic here (e.g., rsync, Vercel CLI, Docker push, etc.)"
-          # Example: pnpm deploy:prod or custom script
+      - name: Deployment Step
+        run: echo "TODO: Add your deploy command (rsync, Vercel, Docker, etc.)"

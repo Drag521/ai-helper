@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: ./.github/actions/setup-node-pnpm
 
-      - name: Run ESLint
+      - name: ESLint
         run: pnpm lint
 
       - name: TypeScript check
@@ -49,10 +49,17 @@ jobs:
     steps:
       - uses: ./.github/actions/setup-node-pnpm
 
-      - name: Build
+      - name: Build Next.js
         run: pnpm build
         env:
           NODE_ENV: production
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: .next/
+          retention-days: 7
 
   all-checks-pass:
     name: All Checks Pass
@@ -60,11 +67,11 @@ jobs:
     needs: [lint, test, build]
     if: always()
     steps:
-      - name: Verify results
+      - name: Verify all jobs
         run: |
-          if [ "${{ needs.lint.result }}" != "success" ] || \
-             [ "${{ needs.test.result }}" != "success" ] || \
-             [ "${{ needs.build.result }}" != "success" ]; then
+          if [[ "${{ needs.lint.result }}" != "success" || \
+                "${{ needs.test.result }}" != "success" || \
+                "${{ needs.build.result }}" != "success" ]]; then
             echo "❌ Some checks failed"
             exit 1
           fi
