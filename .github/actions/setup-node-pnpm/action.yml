@@ -1,5 +1,5 @@
 name: "Setup Node + pnpm"
-description: "Consistent Node + pnpm setup for all workflows"
+description: "Consistent Node 24 + pnpm setup for all workflows"
 
 runs:
   using: "composite"
@@ -10,14 +10,25 @@ runs:
         node-version: 24
         cache: "pnpm"
 
-    - name: Ensure pnpm is available
+    - name: Enable pnpm (corepack) and verify
       shell: bash
       run: |
         set -euxo pipefail
-        export PNPM_PATH="$HOME/.config/nvm/versions/node/$(node -p 'process.versions.node').*/bin"
-        # fallback to the known location
-        export PATH="$HOME/.config/nvm/versions/node/v24.18.0/bin:$PATH"
-        echo "PATH=$PATH"
+        corepack --version || true
+        corepack enable || true
+
+        # Use an explicit pnpm version for stability
+        corepack prepare pnpm@9.15.4 --activate
+
+        # Ensure pnpm is callable (fix PATH to wherever corepack put it)
+        if ! command -v pnpm >/dev/null 2>&1; then
+          echo "pnpm not found in current PATH, attempting to locate it..."
+          PNPM_BIN="$(find "$(dirname "$(command -v node)")" -maxdepth 4 -type f -name pnpm -print 2>/dev/null | head -n 1 || true)"
+          if [ -n "$PNPM_BIN" ]; then
+            export PATH="$(dirname "$PNPM_BIN"):$PATH"
+          fi
+        fi
+
         command -v pnpm
         pnpm --version
 
@@ -25,6 +36,4 @@ runs:
       shell: bash
       run: |
         set -euxo pipefail
-        export PATH="$(dirname "$(command -v pnpm)"):$PATH"
         pnpm install --frozen-lockfile
-
