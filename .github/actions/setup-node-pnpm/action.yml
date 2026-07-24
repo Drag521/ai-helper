@@ -1,16 +1,9 @@
 name: "Setup Node + pnpm"
 description: "Consistent Node 24 + pnpm setup for all workflows"
 
-inputs:
-  cache:
-    description: "Enable dependency cache"
-    required: false
-    default: "true"
-
 runs:
   using: "composite"
   steps:
-
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
@@ -22,8 +15,19 @@ runs:
       with:
         version: 9
 
+    - name: Ensure pnpm is on PATH + verify
+      shell: bash
+      run: |
+        echo "Before: PATH=$PATH"
+        # pnpm/action-setup typically installs into the root user's local bin
+        echo "$HOME/.local/share/pnpm" || true
+        export PATH="$HOME/.local/share/pnpm:$HOME/.local/share/pnpm/bin:$PATH"
+        export PATH="$HOME/.local/bin:$PATH"
+        echo "After: PATH=$PATH"
+
+        which pnpm || true
+        pnpm --version || true
 
     - name: Install dependencies (frozen lockfile)
       shell: bash
       run: pnpm install --frozen-lockfile
-
