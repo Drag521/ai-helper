@@ -1,25 +1,32 @@
-name: 'Setup Node + pnpm'
-description: 'Consistent Node 24 + pnpm setup for all workflows'
+name: "Setup Node + pnpm"
+description: "Consistent Node 24 + pnpm setup for all workflows"
+
 inputs:
   cache:
-    description: 'Enable dependency cache'
+    description: "Enable dependency cache"
     required: false
-    default: 'true'
+    default: "true"
+
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - name: Checkout (optional)
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
       with:
         node-version: 24
-        cache: 'pnpm'
-    - name: Enable pnpm
+        cache: "pnpm"
+
+    - name: Enable pnpm via corepack
       shell: bash
       run: |
         corepack enable
         corepack prepare pnpm@latest --activate
         echo "pnpm: $(pnpm --version)"
-    - name: Install dependencies
-      if: ${{ inputs.cache == 'true' }}
+
+    - name: Install dependencies (frozen lockfile)
       shell: bash
       run: pnpm install --frozen-lockfile
+
