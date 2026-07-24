@@ -10,23 +10,15 @@ runs:
         node-version: 24
         cache: "pnpm"
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v3
-      with:
-        version: 9
-
-    - name: Ensure pnpm is on PATH + verify
+    - name: Install pnpm with corepack (and verify)
       shell: bash
       run: |
-        echo "Before: PATH=$PATH"
-        # pnpm/action-setup typically installs into the root user's local bin
-        echo "$HOME/.local/share/pnpm" || true
-        export PATH="$HOME/.local/share/pnpm:$HOME/.local/share/pnpm/bin:$PATH"
-        export PATH="$HOME/.local/bin:$PATH"
-        echo "After: PATH=$PATH"
-
+        set -euxo pipefail
+        corepack --version || true
+        corepack enable
+        corepack prepare pnpm@9.15.4 --activate
         which pnpm || true
-        pnpm --version || true
+        pnpm --version
 
     - name: Install dependencies (frozen lockfile)
       shell: bash
