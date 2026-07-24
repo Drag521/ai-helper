@@ -36,7 +36,6 @@
   --primary-foreground: #000;
   --secondary:         var(--surface2);
   --secondary-foreground: var(--green-dim);
-  --muted:             var(--surface2);
   --muted-foreground:  var(--green-dim);
   --accent:            var(--surface2);
   --accent-foreground: var(--green);
