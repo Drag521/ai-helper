@@ -17,12 +17,11 @@ runs:
         node-version: 24
         cache: "pnpm"
 
-    - name: Enable pnpm via corepack
-      shell: bash
-      run: |
-        corepack enable
-        corepack prepare pnpm@latest --activate
-        echo "pnpm: $(pnpm --version)"
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: 9
+
 
     - name: Install dependencies (frozen lockfile)
       shell: bash
