@@ -9,6 +9,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm lint
       - run: pnpm tsc --noEmit
@@ -25,6 +26,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm build
         env: { NODE_ENV: production }
