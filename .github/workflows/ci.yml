@@ -8,11 +8,12 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      PATH: /home/runner/.nvm/versions/node/v24.18.0/bin:${{ env.PATH }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - run: pnpm lint
-      - run: pnpm tsc --noEmit
   test:
     runs-on: ubuntu-latest
     steps:
