@@ -1,5 +1,5 @@
 name: "Setup Node + pnpm"
-description: "Consistent Node 24 + pnpm setup for all workflows"
+description: "Consistent Node + pnpm setup for all workflows"
 
 runs:
   using: "composite"
@@ -10,18 +10,20 @@ runs:
         node-version: 24
         cache: "pnpm"
 
-    - name: Ensure pnpm is available (fix PATH explicitly)
+    - name: Ensure pnpm is available
       shell: bash
       run: |
         set -euxo pipefail
-        export PNPM_PATH="$HOME/.config/nvm/versions/node/v24.18.0/bin"
-        export PATH="$PNPM_PATH:$PATH"
-
+        export PNPM_PATH="$HOME/.config/nvm/versions/node/$(node -p 'process.versions.node').*/bin"
+        # fallback to the known location
+        export PATH="$HOME/.config/nvm/versions/node/v24.18.0/bin:$PATH"
         echo "PATH=$PATH"
-        ls -la "$PNPM_PATH" | grep pnpm || true
-        command -v pnpm || true
+        command -v pnpm
         pnpm --version
 
     - name: Install dependencies (frozen lockfile)
       shell: bash
-      run: pnpm install --frozen-lockfile
+      run: |
+        set -euxo pipefail
+        export PATH="$HOME/.config/nvm/versions/node/v24.18.0/bin:$PATH"
+        pnpm install --frozen-lockfile
