@@ -1,5 +1,5 @@
 name: "Setup Node + pnpm"
-description: "Consistent Node 24 + pnpm setup for all workflows"
+description: "Consistent Node + pnpm setup for all workflows"
 
 runs:
   using: "composite"
@@ -10,14 +10,14 @@ runs:
         node-version: 24
         cache: "pnpm"
 
-    - name: Install pnpm with corepack (and verify)
+    - name: Install pnpm (via npm) and verify
       shell: bash
       run: |
         set -euxo pipefail
-        corepack --version || true
-        corepack enable
-        corepack prepare pnpm@9.15.4 --activate
-        which pnpm || true
+        npm --version
+        node --version
+        npm i -g pnpm@9
+        which pnpm
         pnpm --version
 
     - name: Install dependencies (frozen lockfile)
